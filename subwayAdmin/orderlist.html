@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>SUBWAY 써브웨이 관리자</title>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/subwayadmin.css">
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2O/jquery.min.js"></script>-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+<link href="images/common/subway_favicon.ico?v=1" rel="shortcut icon" type="image/x-icon">
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <img alt="Brand" src="images/logo_sub_header.png">
+        </a>
+        <div class="nav-btn-wrap">
+          <button onclick="location.href='menu.html'" type="button" class="nav-homebtn btn btn-success"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<section>
+  <div id="container" class="content-wrap">
+    <div class="container">
+      <div class="menu-nav">
+        <ul>
+          <li><a href="dailysales.html">일별매출</a></li>
+          <li><a href="monthlysales.html">월별매출</a></li>
+          <li class="active"><a href="orderlist.html">주문내역</a></li>
+        </ul>
+      </div>
+      <div class="row AMcontents marginright0">
+          <div class="orderlist-wrap col-xs-11">
+            <div class="tit">
+              <div class="search-wrap">
+                <form class="form-inline" role="search">
+                  <div class="form-group">
+                    <label for="search">주문번호:</label>
+                    <input id="search" type="text" class="form-control" placeholder="Search">
+                    <button id="search-btn" type="submit" class="btn btn-default">Submit</button>
+                  </div>
+                </form>
+              </div>
+              <span>(총 100개, 20/32)</span>
+            </div>
+            <table class="table table-condensed table-bordered table-hover">
+              <colgroup>
+                <col width="15px"/>
+                <col width="70px"/>
+                <col width="*"/>
+                <col width="20px"/>
+                <col width="20px"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>no</th>
+                  <th>주문번호</th>
+                  <th>제품명</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>S-cl-01</td>
+                  <td>햄</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>S-cl-02</td>
+                  <td>참치</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-xs-1"style="height: 100%; padding: 0;">
+            <div class="pagging perpendpagebtn ">
+              <nav>
+                <ul class="pager">
+                  <li><a href="#"><span class="glyphicon glyphicon-chevron-up"></span></a></li>
+                  <li><a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+
+</footer>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>SUBWAY 써브웨이 관리자</title>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/subwayadmin.css">
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2O/jquery.min.js"></script>-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+<link href="images/common/subway_favicon.ico?v=1" rel="shortcut icon" type="image/x-icon">
+<style>
+
+</style>
+<script>
+  function delcheck(){
+    var con = confirm('정말 삭제하시겠습니까?')
+    if(con==true){
+      // location.href='';
+      alert('삭제되었습니다')
+    }
+  }
+</script>
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <img alt="Brand" src="images/logo_sub_header.png">
+        </a>
+        <div class="nav-btn-wrap">
+          <button onclick="location.href='menu.html'" type="button" class="nav-homebtn btn btn-success"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<section>
+  <div id="container" class="content-wrap">
+    <div class="container">
+      <div class="menu-nav">
+        <ul>
+          <li><a href="productlist.html">상품리스트</a></li>
+          <li class="active"><a href="productform.html">상품등록</a></li>
+        </ul>
+      </div>
+      <div class="row AMcontents">
+        <div>
+          <div class="page-header">
+            <h1>상품등록</h1>
+          </div>
+          <div class="col-md-6 col-md-offset-3">
+            <form action="" role="form">
+              <table class="table table-bordered table-condensed">
+                <colgroup>
+                  <col width="100px">
+                </colgroup>
+                <tr hidden>
+                  <th>메뉴번호</th>
+                  <td></td>
+                </tr>
+                <tr>
+                <tr>
+                  <th>카테고리</th>
+                  <td>
+                    <select class="form-control" name="category" id="">
+                      <option value="S">샌드위치</option>
+                      <option value="M">아침식사</option>
+                      <option value="C">찹샐러드</option>
+                      <option value="T">추가토핑</option>
+                      <option value="D">사이드/음료</option>
+                      <option value="V">야채</option>
+                      <option value="P">빵</option>
+                      <option value="SS">소스</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <th>상품명</th>
+                  <td>
+                    <div class="input-group">
+                      <input type="text" class="form-control">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>가격15</th>
+                  <td>
+                    <div class="input-group">
+                      <span class="input-group-addon">&#8361;</span>
+                      <input type="text" class="form-control">
+                      <span class="input-group-addon">.00</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>가격30</th>
+                  <td>
+                    <div class="input-group">
+                      <span class="input-group-addon">&#8361;</span>
+                      <input type="text" class="form-control">
+                      <span class="input-group-addon">.00</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                <tr>
+                  <th>칼로리</th>
+                  <td>
+                    <div class="input-group">
+                      <input type="text" class="form-control">
+                      <span class="input-group-addon">kcal</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>이벤트</th>
+                  <td>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>이미지</th>
+                  <td><input class="btn" type="file" name="fileload" value=""></td>
+                </tr>
+              </table>
+              <button type="button" onclick="location.href='productlist.html'" class="btn btn-default">취소</button>
+              <button type="button" class="btn btn-success">등록</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+
+</footer>
+</html>

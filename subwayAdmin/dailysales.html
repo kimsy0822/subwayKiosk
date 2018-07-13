@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>SUBWAY 써브웨이 관리자</title>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/subwayadmin.css">
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2O/jquery.min.js"></script>-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+<style>
+#chartdiv {
+  width: 100%;
+  height: 300px;
+}
+
+</style>
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<script type="text/javascript">
+var chart = AmCharts.makeChart("chartdiv", {
+  "type": "serial",
+  "theme": "light",
+  "dataDateFormat": "YYYY-MM-DD",
+  "precision": 2,
+  "valueAxes": [{
+    "id": "v1",
+    "title": "Sales",
+    "position": "left",
+    "autoGridCount": false,
+    "labelFunction": function(value) {
+      return "$" + Math.round(value) + "M";
+    }
+  }, {
+    "id": "v2",
+    "title": "Market Days",
+    "gridAlpha": 0,
+    "position": "right",
+    "autoGridCount": false
+  }],
+  "graphs": [{
+    "id": "g3",
+    "valueAxis": "v1",
+    "lineColor": "#e1ede9",
+    "fillColors": "#e1ede9",
+    "fillAlphas": 1,
+    "type": "column",
+    "title": "Actual Sales",
+    "valueField": "sales2",
+    "clustered": false,
+    "columnWidth": 0.5,
+    "legendValueText": "$[[value]]M",
+    "balloonText": "[[title]]<br/><b style='font-size: 130%'>$[[value]]M</b>"
+  }, {
+    "id": "g4",
+    "valueAxis": "v1",
+    "lineColor": "#62cf73",
+    "fillColors": "#62cf73",
+    "fillAlphas": 1,
+    "type": "column",
+    "title": "Target Sales",
+    "valueField": "sales1",
+    "clustered": false,
+    "columnWidth": 0.3,
+    "legendValueText": "$[[value]]M",
+    "balloonText": "[[title]]<br/><b style='font-size: 130%'>$[[value]]M</b>"
+  }, {
+    "id": "g1",
+    "valueAxis": "v2",
+    "bullet": "round",
+    "bulletBorderAlpha": 1,
+    "bulletColor": "#FFFFFF",
+    "bulletSize": 5,
+    "hideBulletsCount": 50,
+    "lineThickness": 2,
+    "lineColor": "#20acd4",
+    "type": "smoothedLine",
+    "title": "Market Days",
+    "useLineColorForBulletBorder": true,
+    "valueField": "market1",
+    "balloonText": "[[title]]<br/><b style='font-size: 130%'>[[value]]</b>"
+  }, {
+    "id": "g2",
+    "valueAxis": "v2",
+    "bullet": "round",
+    "bulletBorderAlpha": 1,
+    "bulletColor": "#FFFFFF",
+    "bulletSize": 5,
+    "hideBulletsCount": 50,
+    "lineThickness": 2,
+    "lineColor": "#e1ede9",
+    "type": "smoothedLine",
+    "dashLength": 5,
+    "title": "Market Days ALL",
+    "useLineColorForBulletBorder": true,
+    "valueField": "market2",
+    "balloonText": "[[title]]<br/><b style='font-size: 130%'>[[value]]</b>"
+  }],
+  "chartScrollbar": {
+    "graph": "g1",
+    "oppositeAxis": false,
+    "offset": 30,
+    "scrollbarHeight": 50,
+    "backgroundAlpha": 0,
+    "selectedBackgroundAlpha": 0.1,
+    "selectedBackgroundColor": "#888888",
+    "graphFillAlpha": 0,
+    "graphLineAlpha": 0.5,
+    "selectedGraphFillAlpha": 0,
+    "selectedGraphLineAlpha": 1,
+    "autoGridCount": true,
+    "color": "#AAAAAA"
+  },
+  "chartCursor": {
+    "pan": true,
+    "valueLineEnabled": true,
+    "valueLineBalloonEnabled": true,
+    "cursorAlpha": 0,
+    "valueLineAlpha": 0.2
+  },
+  "categoryField": "date",
+  "categoryAxis": {
+    "parseDates": false,
+    "dashLength": 1,
+    "minorGridEnabled": true,
+
+
+  },
+  "legend": {
+    "useGraphSettings": true,
+    "position": "top"
+  },
+  "balloon": {
+    "borderThickness": 1,
+    "shadowAlpha": 0
+  },
+  "export": {
+   "enabled": true
+  },
+  "dataProvider": [{
+    "date": "2013-01-01",
+    "market1": 71,
+    "market2": 75,
+    "sales1": 5,
+    "sales2": 8
+  },                  {
+    "date": "2013-02-01",
+    "market1": 74,
+    "market2": 78,
+    "sales1": 4,
+    "sales2": 6
+  }, {
+    "date": "2013-03-01",
+    "market1": 78,
+    "market2": 88,
+    "sales1": 5,
+    "sales2": 2
+  }, {
+    "date": "2013-04-01",
+    "market1": 85,
+    "market2": 89,
+    "sales1": 8,
+    "sales2": 9
+  }, {
+    "date": "2013-05-01",
+    "market1": 82,
+    "market2": 89,
+    "sales1": 9,
+    "sales2": 6
+  }, {
+    "date": "2013-06-01",
+    "market1": 83,
+    "market2": 85,
+    "sales1": 3,
+    "sales2": 5
+  }, {
+    "date": "2013-07-01",
+    "market1": 88,
+    "market2": 92,
+    "sales1": 5,
+    "sales2": 7
+  }, {
+    "date": "2013-08-01",
+    "market1": 85,
+    "market2": 90,
+    "sales1": 7,
+    "sales2": 6
+  }, {
+    "date": "2013-09-01",
+    "market1": 85,
+    "market2": 91,
+    "sales1": 9,
+    "sales2": 5
+  }, {
+    "date": "2013-10-01",
+    "market1": 80,
+    "market2": 84,
+    "sales1": 5,
+    "sales2": 8
+  }, {
+    "date": "2013-11-01",
+    "market1": 87,
+    "market2": 92,
+    "sales1": 4,
+    "sales2": 8
+  }, {
+    "date": "2013-12-01",
+    "market1": 84,
+    "market2": 87,
+    "sales1": 3,
+    "sales2": 4
+  }, {
+    "date": "2014-01-01",
+    "market1": 83,
+    "market2": 88,
+    "sales1": 5,
+    "sales2": 7
+  }, {
+    "date": "2014-02-01",
+    "market1": 84,
+    "market2": 87,
+    "sales1": 5,
+    "sales2": 8
+  }, {
+    "date": "2014-03-01",
+    "market1": 81,
+    "market2": 85,
+    "sales1": 4,
+    "sales2": 7
+  }]
+});
+
+
+
+$(document).ready(function(){
+
+})
+</script>
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <img alt="Brand" src="images/logo_sub_header.png">
+        </a>
+        <div class="nav-btn-wrap">
+          <button onclick="location.href='menu.html'" type="button" class="nav-homebtn btn btn-success"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<section>
+  <div id="container" class="content-wrap">
+    <div class="container">
+      <div class="menu-nav">
+        <ul>
+          <li class="active"><a href="dailysales.html">일별매출</a></li>
+          <li><a href="monthlysales.html">월별매출</a></li>
+          <li><a href="orderlist.html">주문내역</a></li>
+        </ul>
+      </div>
+      <div class="AMcontents">
+        <div class="row marginright0">
+          <div class="statistics-wrap col-xs-12">
+            <div class="tit">
+              <h2>통계그래프</h2>
+              <span>(2018-05-19~2018-06-19)</span>
+            </div>
+            <div class="statistics-graph">
+
+              <div id="chartdiv"></div>
+
+            </div>
+          </div>
+        </div>
+        <div class="row marginright0">
+          <div class="statistics-list col-xs-9">
+            <div class="tit">
+              <h2>통계리스트</h2>
+              <span>(2018-05-19~2018-06-19)</span>
+            </div>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>날짜</th>
+                  <th>총 매출액</th>
+                  <th>총 매출수</th>
+                  <th>영업시간</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2018-06-19</td>
+                  <td>500000</td>
+                  <td>72</td>
+                  <td>15:21:04</td>
+                </tr>
+                <tr>
+                  <td>2018-06-18</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>2018-06-17</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>2018-06-16</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>2018-06-15</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>2018-06-15</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>2018-06-15</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>2018-06-15</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>2018-06-15</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>2018-06-15</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="">
+              <nav>
+                <ul class="pager">
+                  <li><a href="#"><span class="glyphicon glyphicon-chevron-up"></span></a></li>
+                  <li><a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a></li>
+                </ul>
+              </nav>
+            </div>
+
+          </div>
+          <div class="rank-wrap col-xs-3">
+            <div class="tit">
+              <h2>판매순위</h2>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>순위</th>
+                  <th>제품명</th>
+                  <th>판매량</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>이탈리안비엠티</td>
+                  <td>21</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>비엠티</td>
+                  <td>18</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>에그마요</td>
+                  <td>15</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>초코칩쿠키</td>
+                  <td>13</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>터키</td>
+                  <td>12</td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>햄</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>콜라</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>커피</td>
+                  <td>7</td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>써브웨이클럽</td>
+                  <td>3</td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>로스트치킨</td>
+                  <td>1</td>
+                </tr>
+
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+
+</footer>
+</html>

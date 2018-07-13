@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Manager">
+	
+	<!--관리자 등록  -->
+	<insert id="insertMan" parameterType="com.hk.th.vo.ManagerVo">
+		insert into manager(id, pw, name, hpnum, address) values(#{id}, #{pw}, #{name}, #{hpnum}, #{address})
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="loginMan" parameterType="com.hk.th.vo.ManagerVo" resultType="Integer">
+		select count(*) from manager where id= #{id} and pw= #{pw};
+	</select>
+	
+	<select id="count" resultType="Integer">
+		select count(*) from manager;
+	</select>
+	
+	<!-- 관리자 리스트 불러오기 -->
+	<select id="ManInfo" parameterType="String" resultType="com.hk.th.vo.ManagerVo">
+		select * from manager where id= #{id};
+	</select>
+	
+	
+	<!-- 관리자 정보 수정 -->
+	<update id="manUpdate" parameterType="com.hk.th.vo.ManagerVo">
+		update manager set pw=#{pw}, name=#{name}, hpnum=#{hpnum}, address=#{address}
+		where id=#{id}
+	</update>
+	
+	<!-- 관리자 삭제 -->
+	<delete id="manDel" parameterType="com.hk.th.vo.ManagerVo">
+		delete from manager where id=#{id}
+	</delete>
+	
+	<!--상품리스트 가져오기  -->
+	<select id="menulist" resultType="com.hk.th.vo.SubwayVo">
+		select * from menu
+	</select>
+	
+	<!-- 상품리스트 총 갯수 -->
+	<select id="countMenulist" resultType="Integer">
+		select count(*) from menu
+	</select>
+	
+	<!-- 상품리스트 검색 -->
+	<select id="schmenulist" parameterType="hashmap" resultType="com.hk.th.vo.SubwayVo">
+		<if test="searchType = null">
+			select * from menu limit #{paging.limit1},#{paging.limit2}
+		</if>
+	
+		<if test="searchType != null">
+		
+			<if test="searchType == 'mid'.toString()">
+			select * from menu where mid like concat('%', #{paging.keyValue} , '%') limit #{paging.limit1},#{paging.limit2}
+			</if>
+			<if test="searchType == 'name'.toString()">
+			select * from menu where name like concat('%', #{paging.keyValue} , '%') limit #{paging.limit1},#{paging.limit2}
+			</if>
+			<if test="searchType == 'category'.toString()">
+			select * from menu where category like concat('%', #{paging.keyValue} , '%') limit #{paging.limit1},#{paging.limit2}
+			</if>
+			
+		</if>
+
+	</select>
+	
+	<!-- 상품리스트 검색 갯수 -->
+	<select id="schmenulistcount" parameterType="hashmap" resultType="Integer">
+	
+		<if test="searchType = null">
+			select count(*) from menu
+		</if>
+		
+		<if test="searchType != null">
+		
+			<if test="searchType == 'mid'.toString()">
+			select count(*) as cnt from menu where mid like concat('%', #{paging.keyValue} , '%')
+			</if>
+			<if test="searchType == 'name'.toString()">
+			select count(*) as cnt from menu where name like concat('%', #{paging.keyValue} , '%')
+			</if>
+			<if test="searchType == 'category'.toString()">
+			select count(*) as cnt from menu where category like concat('%', #{paging.keyValue} , '%')
+			</if>
+			
+		</if>
+		
+	</select>
+	
+	<!-- 상품등록 -->
+	<insert id="menuInsert" parameterType="com.hk.th.vo.SubwayVo">
+		insert into menu(mid, category, name, price15, price30, event, cal, img) 
+			values(#{mid}, #{category}, #{name}, #{price15}, #{price30}, #{event}, #{cal}, #{img})
+	</insert>
+	
+	<!-- 메뉴 카테고리별 갯수 -->
+	<select id="countCategory" resultType="Integer" parameterType="String">
+		select count(*) from menu where mid like concat(#{category},'-','%')
+	</select>
+
+	<!-- 상품수정 -->
+	<update id="updateMenu" parameterType="com.hk.th.vo.SubwayVo">
+		update menu set price15 = #{price15}, price30 = #{price30},
+		event = #{event}, cal = #{cal}, img = #{img} where mid = #{mid} 
+	</update>
+	
+	<!-- 상품 삭제 -->
+	<delete id="menuDel" parameterType="String">
+		delete from menu where mid=#{mid}
+	</delete>
+	
+	<!-- 주문리스트 개수 -->
+	<select id="orderCount" parameterType="hashmap" resultType="Integer">
+
+		<if test="searchType = null">
+			select count(c.ordernum) as cnt from(select ordernum,count(ordernum) from orders group by ordernum) as c
+		</if>
+		
+		<if test="searchType != null">
+		
+			<if test="searchType == 'ordernum'.toString()">
+			select count(c.ordernum) as cnt from(select ordernum,count(ordernum) from orders group by ordernum having ordernum like concat('%',#{paging.keyValue},'%')) as c
+			</if>
+			<if test="searchType == 'regdate'.toString()">
+			select count(c.regdate) as cnt from(select regdate,count(ordernum) from orders group by ordernum having regdate like concat('%',#{paging.keyValue},'%')) as c
+			</if>
+			<if test="searchType == 'status'.toString()">
+			select count(c.status) as cnt from(select status,count(ordernum) from orders group by ordernum having status like concat('%',#{paging.keyValue},'%')) as c
+			</if>
+			
+		</if>
+		 
+	</select>
+	
+	<!-- 주문리스트  -->
+	<select id="orderList" parameterType="hashmap" resultType="com.hk.th.vo.SubwayVo">
+	
+		<if test="searchType = null">
+			select *,count(ordernum) as except,sum(totalprice) as finalprice from orders group by ordernum order by ordernum desc limit #{paging.limit1},#{paging.limit2};
+		</if>
+	
+		<if test="searchType != null">
+		
+			<if test="searchType == 'ordernum'.toString()">
+			select *,count(ordernum) as except,sum(totalprice) as finalprice from orders group by ordernum having ordernum like concat('%',#{paging.keyValue},'%') order by ordernum desc limit #{paging.limit1},#{paging.limit2};
+			</if>
+			<if test="searchType == 'regdate'.toString()">
+			select *,count(ordernum) as except,sum(totalprice) as finalprice from orders group by ordernum having regdate like concat('%',#{paging.keyValue},'%') order by ordernum desc limit #{paging.limit1},#{paging.limit2};
+			</if>
+			<if test="searchType == 'status'.toString()">
+			select *,count(ordernum) as except,sum(totalprice) as finalprice from orders group by ordernum having status like concat('%',#{paging.keyValue},'%') order by ordernum desc limit #{paging.limit1},#{paging.limit2};
+			</if>
+			
+		</if>
+
+	</select>
+	
+	<!-- mid로 메뉴정보검색 -->
+	<select id="getMenuInfoById" parameterType="String" resultType="com.hk.th.vo.SubwayVo">
+		select * from menu where mid=#{mid}
+	</select>
+	
+	<!-- 주문상세  -->
+	<select id="getOrderByOrderNum" parameterType="String" resultType="com.hk.th.vo.SubwayVo">
+		select * from orders where ordernum = #{ordernum}
+	</select>
+	
+	<!-- 취소번호 만들때 사용하는 쿼리 -->
+	<select id="selectCancleListCount" parameterType="String" resultType="com.hk.th.vo.SubwayVo">
+		select * from orders group by canclenum having regdate like #{regdate}
+	</select>
+	
+	<!-- 주문취소  -->
+	<update id="orderUpdate"  parameterType="com.hk.th.vo.SubwayVo">
+		update orders set canclenum=#{canclenum}, status=#{status}, totalprice=#{totalprice} where ordernum=#{ordernum}
+	</update>
+	
+	<!-- 매출테이블 마감시간null 데이터 유무 확인 -->
+	<select id="closeNullCount" resultType="Integer">
+		select count(*) from sales where closetime is null
+	</select>
+	
+	<!-- 오픈시간등록 -->
+	<insert id="insertOpen" parameterType="com.hk.th.vo.SubwayVo">
+		insert into sales(regdate,opentime,totalsal)values(#{regdate}, #{opentime},0)
+	</insert>
+	
+	<!-- 오픈시간 가져오기 -->
+	<select id="getOpentime" resultType="com.hk.th.vo.SubwayVo">
+		select * from sales where closetime is null
+	</select>
+	
+	<!--영업시작시간 이후의 주문테이블 정보 가져오기-->
+	<select id="getsalesdata" parameterType="String" resultType="com.hk.th.vo.SubwayVo">
+		select regdate, sum(totalprice) as totalsal,count(ordernum) as salcount from orders where status='결제완료' and regdate >=  #{opentime}
+	</select>
+	
+	<!--영업시작시간 이후의 주문테이블 리스트로 가져오기-->
+	<select id="getsalesdatalist" resultType="com.hk.th.vo.SubwayVo">
+		select * from orders where status='결제완료'
+	</select>
+	
+	<!-- 영업종료 등록 -->
+	<update id="updateClose" parameterType="com.hk.th.vo.SubwayVo">
+		update sales set closetime = #{closetime}, salcount = #{salcount}, totalsal = #{totalsal} where regdate=#{regdate} and opentime=#{opentime}
+	</update>
+	
+	<!-- 일별 매출테이블 리스트 -->
+	<select id="salesListDaily" parameterType="com.hk.th.vo.PagingVo" resultType="com.hk.th.vo.SubwayVo">
+		select regdate, sum(totalsal) as totalsal, sum(salcount) as salcount, SEC_TO_TIME(sum(TIME_TO_SEC(TIMEDIFF(closetime,opentime)))) as saltime 
+		from sales where regdate between (now() - interval 1 month) and (now()- interval 1 day)
+		group by regdate 
+		order by regdate desc 
+		limit #{limit1},#{limit2} 
+	</select>
+	
+	<!-- 일별 매출테이블 리스트2 -->
+	<select id="salesListDaily2" resultType="com.hk.th.vo.SubwayVo">
+		select regdate, sum(totalsal) as totalsal, sum(salcount) as salcount, SEC_TO_TIME(sum(TIME_TO_SEC(TIMEDIFF(closetime,opentime)))) as saltime 
+		from sales where regdate between (now() - interval 1 month) and (now()- interval 1 day)
+		group by regdate 
+		order by regdate desc
+	</select>
+	
+	<!-- 일별 판매순위 -->
+	<select id="selectDayRank" parameterType="String" resultType="com.hk.th.vo.SubwayVo">
+		select o.mid, name, regdate, sum(qnt) as qnt
+		from orders as o left join menu as m on o.mid=m.mid
+		where regdate like concat(#{date},'%')
+		group by o.mid
+		order by qnt desc
+	</select>
+	
+	<!-- 월별 매출테이블 리스트 -->
+	<select id="salesListMonthly" resultType="com.hk.th.vo.SubwayVo" >
+		select DATE_FORMAT(regdate,'%Y-%m') as m, sum(totalsal) as totalsal, sum(salcount) as salcount, SEC_TO_TIME(avg(TIME_TO_SEC(TIMEDIFF(closetime,opentime)))) as saltime 
+		from sales 
+		where regdate between (now() - interval 1 year) and last_day(now()-interval 1 month)
+		group by m
+		order by m desc
+	</select>
+		
+	<!--월별 매출순위  -->
+	<select id="selMonthRank" parameterType="String" resultType="com.hk.th.vo.SubwayVo">
+		select o.mid, name, sum(qnt) as qnt
+		from orders as o left join menu as m on o.mid=m.mid
+		where regdate like concat(#{date},'%')
+		group by mid
+		order by qnt desc;
+	</select>
+		
+	<!-- 매출갯수 -->
+	<select id="salesListCount" resultType="Integer">
+		select count(*) from (select regdate, sum(totalsal) as totalsal, sum(salcount) as salcount, SEC_TO_TIME(sum(TIME_TO_SEC(TIMEDIFF(closetime,opentime)))) as saltime 
+		from sales where regdate between (now() - interval 1 month) and (now()- interval 1 day)
+		group by regdate) as c;
+	</select>
+	
+	
+	
+</mapper>
