@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>SUBWAY 써브웨이 관리자</title>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/subwayadmin.css">
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2O/jquery.min.js"></script>-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+<link href="images/common/subway_favicon.ico?v=1" rel="shortcut icon" type="image/x-icon">
+<script>
+  function delcheck(){
+    var con = confirm('정말 삭제하시겠습니까?')
+    if(con==true){
+      // location.href='';
+      alert('삭제되었습니다')
+    }
+  }
+</script>
+<style>
+
+</style>
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <img alt="Brand" src="images/logo_sub_header.png">
+        </a>
+        <div class="nav-btn-wrap">
+          <button onclick="location.href='menu.html'" type="button" class="nav-homebtn btn btn-success"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<section>
+  <div id="container" class="content-wrap">
+    <div class="container">
+      <div class="menu-nav">
+        <ul>
+          <li class="active"><a href="questionboard.html">문의게시판</a></li>
+          <li><a href="questionwrite.html">문의등록</a></li>
+        </ul>
+      </div>
+      <div class="AMcontents">
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="notice-wrap">
+              <div class="notice">
+                <h3>공지사항</h3>
+                <ul>
+                  <li><a href="">7월신규이벤트공지</a></li>
+                  <li><a href="">충분재고기준 발주배달기간</a></li>
+                  <li><a href="">신촌3호점 오픈</a></li>
+                </ul>
+                <span><a href="questionnotice.html">더보기</a>></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="myinfo-wrap">
+              <div class="myinfo">
+                <h3>신촌점 문의정보</h3>
+                <table class="">
+                  <tr>
+                    <th>내가 쓴 글</th>
+                    <td><a href="">2</a></td>
+                    <th>답변</th>
+                    <td><a href="">0</a><span class="newbtn">new</span></td>
+                  </tr>
+                  <tr>
+                    <th>내가 쓴 댓글</th>
+                    <td><a href="">0</a></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="search-wrap">
+                <form name="searchMenu" method="get" class="form-inline" role="search">
+                  <div class="form-group">
+                  	<label for="search">
+  					          <select size="1" name="keyWord" class="select_type_1">
+                    		<option value="">작성자</option>
+                    		<option value="" selected>제목</option>
+                    		<option value="">내용</option>
+                  		</select>
+              		  </label>
+                		<div id="show" style="display:  inline-block;">
+                			<input name="keyValue" input id="search" type="text" class="form-control" placeholder="Search">
+                		</div>
+                    <button id="search-btn" type="submit" class="btn btn-default">검색</button>
+                  </div>
+                </form>
+              </div>
+        </div>
+        <div class="row">
+          <div class="table-wrap col-xs-12">
+            <span>(총 100개, 15/32)</span>
+            <table class="table table-bordered table-condensed table-hover">
+              <colgroup>
+                <col width="70px"/>
+                <col width="*"/>
+                <col width="70px"/>
+                <col width="70px"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>글번호</th>
+                  <th>제목</th>
+                  <th>작성자</th>
+                  <th>조회수</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>0000002</td>
+                  <td><a href="">햄<span class="replycount">[1]</span></a></td>
+                  <td>신촌점</td>
+                  <td>1525</td>
+                </tr>
+                <tr>
+                  <td>0000002</td>
+                  <td><a href="">햄</a></td>
+                  <td>신촌점</td>
+                  <td>1525</td>
+                </tr>
+                <tr>
+                  <td>0000002</td>
+                  <td><a href="">햄</a></td>
+                  <td>신촌점</td>
+                  <td>1525</td>
+                </tr>
+                <tr>
+                  <td>0000002</td>
+                  <td><a href="">햄</a></td>
+                  <td>신촌점</td>
+                  <td>1525</td>
+                </tr>
+                <tr>
+                  <td>0000002</td>
+                  <td><a href="">햄</a></td>
+                  <td>신촌점</td>
+                  <td>1525</td>
+                </tr>
+                <tr>
+                  <td>0000002</td>
+                  <td><a href="">햄</a></td>
+                  <td>신촌점</td>
+                  <td>1525</td>
+                </tr>
+                <tr>
+                  <td>0000002</td>
+                  <td><a href="">햄</a></td>
+                  <td>신촌점</td>
+                  <td>1525</td>
+                </tr>
+                <tr>
+                  <td>0000002</td>
+                  <td><a href="">햄</a></td>
+                  <td>신촌점</td>
+                  <td>1525</td>
+                </tr>
+                <tr>
+                  <td>0000002</td>
+                  <td><a href="">햄</a></td>
+                  <td>신촌점</td>
+                  <td>1525</td>
+                </tr>
+                <tr>
+                  <td>0000002</td>
+                  <td><a href="">햄</a></td>
+                  <td>신촌점</td>
+                  <td>1525</td>
+                </tr>
+                <tr>
+                  <td>0000002</td>
+                  <td><a href="">햄</a></td>
+                  <td>신촌점</td>
+                  <td>1525</td>
+                </tr>
+                <tr>
+                  <td>0000002</td>
+                  <td><a href="">햄</a></td>
+                  <td>신촌점</td>
+                  <td>1525</td>
+                </tr>
+
+                <tr>
+                  <td>0000002</td>
+                  <td><a href="">햄</a></td>
+                  <td>신촌점</td>
+                  <td>1525</td>
+                </tr>
+                <tr>
+                  <td>0000001</td>
+                  <td><a href="">햄 문의합니다</a><span class="glyphicon glyphicon-lock lockico"></span></td>
+                  <td>신촌점</td>
+                  <td>2547</td>
+                </tr>
+                <tr>
+                  <td>0000003</td>
+                  <td><span class="replyico"></span><a href="">햄 문의합니다</a><span class="glyphicon glyphicon-lock lockico"></span></td>
+                  <td>신촌점</td>
+                  <td>2547</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagging">
+            <div class="pagging-wrap">
+              <nav>
+                <ul class="pagination">
+                  <li>
+                    <a href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li><a href="#">1</a></li>
+                  <li><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                  <li><a href="#">4</a></li>
+                  <li><a href="#">5</a></li>
+                  <li>
+                    <a href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+
+</footer>
+</html>
