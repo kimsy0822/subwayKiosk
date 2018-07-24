@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Kiosk">
+
+	<select id="menulist" resultType="com.hk.th.vo.SubwayVo">
+		select * from menu
+	</select>
+	
+	<!-- 샌드위치 사이즈에 따른 가격 불러오기 -->
+	<select id="selectprice15" resultType="Integer" parameterType="String">
+		select price15 from menu where mid = #{mid}
+	</select>
+	<select id="selectprice30" resultType="Integer" parameterType="String">
+		select price30 from menu where mid = #{mid} 
+	</select>	
+	
+	<!-- 토핑이름으로 정보 불러오기 -->
+	<select id="selectToppingByName" resultType="com.hk.th.vo.SubwayVo" parameterType="String">
+		select * from menu where name = #{toppingname} and mid like 'T%'
+	</select>
+	
+	<!-- 임시 테이블에 메뉴 insert -->
+	<insert id="insertTempOrder" parameterType="com.hk.th.vo.SubwayVo">
+	 	insert into temporders (mid, mname, price, options, qnt, optionprice)
+	 	values (#{mid}, #{mname}, #{price}, #{options}, #{qnt}, #{optionprice})
+	</insert>
+	
+	<!-- 임시 테이블에 메뉴 불러오기 -->
+	<select id="templist" resultType="com.hk.th.vo.SubwayVo">
+		select * from temporders
+	</select>
+	
+	<!-- 메인으로 돌아가면 임시테이블 전부 비우기 -->
+	<delete id="emptyTable">
+		delete from temporders
+	</delete>
+	
+	<!-- 임시테이블 메뉴 지우기 -->
+	<delete id="tmepDel" parameterType="com.hk.th.vo.SubwayVo">
+		delete from temporders where mname=#{mname} and options=#{options}
+	</delete>
+	
+	<!-- 메뉴 수량 수정 -->
+	<update id="modifyQnt" parameterType="com.hk.th.vo.SubwayVo">
+		update temporders set qnt = #{qnt} where mname=#{mname}
+	</update>
+	
+	<!-- 주문번호 만들때 사용하는 쿼리 -->
+	<select id="selectOrderListCount" parameterType="String" resultType="com.hk.th.vo.SubwayVo">
+		select * from orders group by ordernum having regdate like concat(#{regdate},'%');
+	</select>
+	
+	<!-- 주문테이블 insert -->
+	<insert id="insertOrders" parameterType="com.hk.th.vo.SubwayVo">
+		insert into orders (ordernum, mid, canclenum, status, options, qnt, totalprice, regdate, togo)
+		values (#{ordernum}, #{mid}, #{canclenum}, #{status}, #{options}, #{qnt}, #{totalprice}, now(), #{togo})
+	</insert>
+	
+	<!-- 주문테이블 불러오기 -->
+   <select id="orderslist" resultType="com.hk.th.vo.SubwayVo" parameterType="String">
+      select * from orders where ordernum=#{ordernum} 
+   </select>
+   
+   <!-- 주문과 메뉴 조인후 불러오기 -->
+   <select id="finishlist" resultType="com.hk.th.vo.SubwayVo" parameterType="String">
+      select * from orders as o left join menu as m on o.mid=m.mid where ordernum=#{ordernum} 
+   </select>
+   
+   <!-- 주문상태 수정 -->
+	<update id="modifyStatus" parameterType="com.hk.th.vo.SubwayVo">
+		update orders set status = #{status} where ordernum=#{ordernum}
+	</update>
+   
+</mapper>
+
